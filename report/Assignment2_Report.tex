@@ -461,14 +461,19 @@ and ratio of the scalar blocked time to the CSR time without and with the conver
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.49\textwidth]{../results/plot_output_density.png}
-    \hfill
-    \includegraphics[width=0.49\textwidth]{../results/plot_density_memory.png}
-    \caption{$n = 2000$, log-log scale. Left: density of $C = AB$; the dotted line is the
-    uniform model $1 - (1 - d^2)^n$. Right: computed CSR storage ($A$, $B$, $C$ and work
-    space) and peak working set of the CSR and dense blocked processes; the dashed line is
-    $24n^2$ bytes.}
+    \includegraphics[width=0.72\textwidth]{../results/plot_output_density.png}
+    \caption{Density of $C = AB$ vs density of the inputs at $n = 2000$ (log-log scale).
+    The dotted line is the uniform model $1 - (1 - d^2)^n$.}
     \label{fig:fillmem}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.72\textwidth]{../results/plot_density_memory.png}
+    \caption{Memory vs density at $n = 2000$ (log-log scale): computed CSR storage ($A$,
+    $B$, $C$ and work space) and peak working set of the CSR and dense blocked processes.
+    The dashed line is $24n^2$ bytes.}
+    \label{fig:densitymemory}
 \end{figure}
 
 \textit{Dense methods and fill-in.} The dense kernels do not depend on the zeros: across
@@ -494,7 +499,7 @@ it moves the crossovers by at most 1.2 percentage points and leaves CSR about 22
 faster than the scalar dense kernel at $d = 0.1\%$. The uniform conversion is slowest at
 $d = 50\%$ (52.9~ms, against 17.5~ms at 100\%); the band conversion grows steadily with $d$.
 
-\textit{Memory.} The CSR storage is smaller than the $24n^2$ bytes of the dense matrices up
+\textit{Memory} (Figure~\ref{fig:densitymemory}). The CSR storage is smaller than the $24n^2$ bytes of the dense matrices up
 to 49.9\% density (uniform) and 56.1\% (band), and 1.5 times larger at 100\%; at $d = 5\%$,
 with an almost full product, the uniform CSR matrices still need 0.55 times the dense
 storage. The peak working set of CSR goes from 4.3~MiB at $d = 0.1\%$ to 141.5~MiB at
