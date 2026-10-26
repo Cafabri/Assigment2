@@ -11,6 +11,8 @@
 \usepackage{float}
 \usepackage{array}
 \usepackage{placeins}
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=2pt, topsep=2pt}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[nobottomtitles*]{titlesec}
@@ -579,87 +581,117 @@ including uniform inputs with $5\% \le d \le 50\%$ & Refuted (threshold wrong) \
 
 \subsection{Effect of the dense optimisations}
 
-\textit{Memory access.} The dense kernels perform the same $n^3$ multiply-adds in the same
-order for each element, so their differences come from the order in which memory is read.
-Up to $n = 1500$, $B$ (at most 18~MB) fits in the 30~MB L3, and \texttt{ikj} is 1.6--2.1
-times faster than \texttt{ijk}. Beyond it, the cost per operation of \texttt{ijk} grows 2.6
-times and that of \texttt{ikj} by 40\%. \texttt{ikj} reads $B$ row by row, using every page
-and cache line completely, so its smaller jump is consistent with the L3-capacity
-explanation of Assignment~1 ($B$, 32~MB at $n = 2000$, is read again from memory for every
-row of $C$), and suggests that the much larger jump of \texttt{ijk} also comes from its
-stride. Neither TLB nor cache misses were measured, so the share of each effect remains a
-hypothesis. At $n = 2000$, \texttt{ikj} reads one 8-byte element of $B$ per multiply-add,
-equivalent to about 22 (scalar) and 36~GB/s (AVX2), plausible main-memory rates; no
-bandwidth benchmark was run.
+The dense kernels perform the same $n^3$ multiply-adds in the same order for each element,
+so their differences come only from the order in which memory is read and from the
+instructions used. None of the explanations below was measured with hardware counters.
 
-The blocked kernel removes the dependence on $n$, as expected if each tile of $B$ is
-reused from the cache instead of being read again from memory~\cite{lam1991}. The best
-block sizes are consistent with the cache sizes, without direct verification: with
-$b = 32$ the three tiles occupy $3 \times 8b^2 = 24$~KB, within the 48~KB L1, and with
-$b = 256$ 1.5~MB, within the 2~MB L2. In the AVX2 build small tiles are 1.8 times slower,
-consistent with an inner loop of $b$ elements too short for the vector loop (4 doubles,
-unrolled 4 times) and its aliasing check.
+\textbf{Memory access (\texttt{ikj}).}
+\begin{itemize}
+    \item Up to $n = 1500$, $B$ (at most 18~MB) fits in the 30~MB L3 and \texttt{ikj} is
+    1.6--2.1 times faster than \texttt{ijk}. Beyond it, the cost per operation of
+    \texttt{ijk} grows 2.6 times and that of \texttt{ikj} only by 40\%.
+    \item \texttt{ikj} uses every page and cache line of $B$ completely, so its smaller jump
+    is consistent with the L3-capacity explanation of Assignment~1 ($B$, 32~MB at
+    $n = 2000$, is read again from memory for every row of $C$); the much larger jump of
+    \texttt{ijk} suggests that its stride adds to it. The share of cache and TLB remains a
+    hypothesis.
+    \item At $n = 2000$ \texttt{ikj} reads one 8-byte element of $B$ per multiply-add,
+    equivalent to about 22 (scalar) and 36~GB/s (AVX2), plausible main-memory rates; no
+    bandwidth benchmark was run.
+\end{itemize}
 
-\textit{The transposed operand.} Transposing $B$ gives \texttt{ijk} unit stride but keeps
-one serial chain of $n$ additions per element. Up to $n = 500$, where \texttt{ijk} still
-finds $B$ in the cache, both cost 0.36--0.37~ns per multiply-add, while \texttt{ikj}, whose
-consecutive additions go to different elements, costs 0.23~ns. This is consistent with the
-dot-product kernels being limited by the latency of the chain of
-additions~\cite{hennessy2019}, not measured with hardware counters. The transposition
-costs almost nothing, so this is a valid fix for the memory problem of \texttt{ijk}, but
-not as good as reordering the loops.
+\textbf{Cache blocking.}
+\begin{itemize}
+    \item The blocked kernel removes the dependence on $n$, as expected if each tile of
+    $B$ is reused from the cache instead of being read again from memory~\cite{lam1991}.
+    \item The best block sizes are consistent with the cache sizes: with $b = 32$ the three
+    tiles occupy $3 \times 8b^2 = 24$~KB (48~KB L1), and with $b = 256$ 1.5~MB (2~MB L2).
+    \item In the AVX2 build small tiles are 1.8 times slower, consistent with an inner loop
+    of $b$ elements too short for the vector loop (4 doubles, unrolled 4 times) and its
+    aliasing check.
+\end{itemize}
 
-\textit{Vectorisation.} The loop order is what allows vectorisation: the inner loop of
-\texttt{ikj} updates independent elements and is vectorised, whereas the dot product
-cannot be vectorised without changing the rounding, and \texttt{transposed} gains nothing.
-The gain never reaches the 4 doubles of a register (at most 2.8), and in \texttt{ikj} it
-falls to 1.4 at large $n$: once the arithmetic is faster, the kernel that reads $B$ from
-memory for every row spends a larger share of its time waiting for memory, which blocking
-avoids. The two optimisations therefore combine: blocking alone gives 16.4 times over
-\texttt{ijk} at $n = 4000$, vectorisation with the loop reordering it needs 12.4 times,
-and both 45.8 times. The 16\% slowdown of \texttt{transposed} at $n = 100$ in the AVX2
-build is not explained by the measurements; code alignment is one possible cause.
+\textbf{Transposed operand.}
+\begin{itemize}
+    \item It gives \texttt{ijk} unit stride but keeps one serial chain of $n$ additions per
+    element. Up to $n = 500$, where \texttt{ijk} still finds $B$ in the cache, both cost
+    0.36--0.37~ns per multiply-add, while \texttt{ikj}, whose consecutive additions go to
+    different elements, costs 0.23~ns: consistent with the dot products being limited by the
+    latency of the additions~\cite{hennessy2019}.
+    \item The transposition costs at most 0.5\% of the kernel, so it is a valid fix for the
+    memory problem of \texttt{ijk}, but not as good as reordering the loops.
+\end{itemize}
+
+\textbf{Vectorisation.}
+\begin{itemize}
+    \item The loop order is what allows it: \texttt{ikj} updates independent elements and is
+    vectorised; the dot product cannot be without changing the rounding, and
+    \texttt{transposed} gains nothing.
+    \item The gain never reaches the 4 doubles of a register (at most 2.8), and in
+    \texttt{ikj} it falls to 1.4 at large $n$: with faster arithmetic, the kernel that reads
+    $B$ from memory for every row waits longer for memory, which blocking avoids.
+    \item The optimisations combine: over \texttt{ijk} at $n = 4000$, blocking alone gives
+    16.4 times, vectorisation with the loop reordering it needs 12.4 times, and both 45.8
+    times.
+    \item The 16\% slowdown of \texttt{transposed} at $n = 100$ in the AVX2 build is not
+    explained by the measurements; code alignment is one possible cause.
+\end{itemize}
 
 \subsection{Effect of sparse storage}
 
-CSR avoids the products with a zero factor, all but $n^3 d^2$ of the $n^3$, but pays more
-for each product it performs: for $d \ge 20\%$ its time divided by $n^3 d^2$ (0.65--0.76~ns)
-is 3.0--3.5 times the 0.22~ns of the scalar blocked kernel and 8--9.5 times the 0.080~ns of
-the vectorised one, because each product reads a column index, updates the accumulator at
-a scattered position and checks a marker. If both costs were constant, the crossover would
-be where $d^2$ equals their ratio: $\sqrt{0.22 / 0.72} \approx 55\%$ against the scalar
-kernel and $\sqrt{0.080 / 0.72} \approx 33\%$ against the vectorised one, close to the
-measured 55\% and 33\% (uniform). The crossover therefore depends on how optimised the
-dense alternative is.
+\textbf{Time and crossover.}
+\begin{itemize}
+    \item CSR performs only about $n^3 d^2$ of the $n^3$ multiply-adds but pays more for
+    each: for $d \ge 20\%$ its time divided by $n^3 d^2$ (0.65--0.76~ns) is 3.0--3.5 times
+    the 0.22~ns of the scalar blocked kernel and 8--9.5 times the 0.080~ns of the vectorised
+    one, because each product reads a column index, updates the accumulator at a scattered
+    position and checks a marker.
+    \item If both costs were constant, the crossover would be where $d^2$ equals their
+    ratio: $\sqrt{0.22 / 0.72} \approx 55\%$ (scalar) and $\sqrt{0.080 / 0.72} \approx 33\%$
+    (vectorised), close to the measured 55\% and 33\% (uniform). The crossover therefore
+    depends on how optimised the dense alternative is.
+\end{itemize}
 
-At low density the cost per product grows, because the number of products falls as $d^2$
-while the costs per row of $C$ (marker initialisation, sorting) and per nonzero of $C$ do
-not. This is why the distribution matters: at $d = 1\%$ both perform about the same number
-of products, but the uniform product has 18\% nonzeros and the band product 2\%, and the
-band kernel is 5.4 times faster. The adjacent rows of $B$ selected by a band row may also
-help; this was not separated from the fill-in. The conversion is negligible at medium and
-high densities, but at $d = 0.1\%$ it is bounded below by reading the two dense matrices
-twice (7.8~ms against 0.17~ms for the kernel); CSR still remains about 220 times faster.
-Its peak at $d = 50\%$ for uniform inputs is consistent with the branch on
-\texttt{v != 0} being unpredictable when half of the random entries are zero, unlike band
-inputs, whose nonzeros form almost contiguous runs; this was not measured.
+\textbf{Low density and distribution.}
+\begin{itemize}
+    \item At low density the cost per product grows, because the products fall as $d^2$
+    while the costs per row of $C$ (marker initialisation, sorting) and per nonzero of $C$
+    do not.
+    \item This is why the distribution matters: at $d = 1\%$ both perform about the same
+    number of products, but the uniform product has 18\% nonzeros and the band product 2\%,
+    and the band kernel is 5.4 times faster. The adjacent rows of $B$ selected by a band row
+    may also help; this was not separated from the fill-in.
+\end{itemize}
 
-\textit{Memory.} Prediction P6 compared the 12 bytes of a CSR nonzero with the 8 of a dense
-entry for the product only. The relevant comparison is with all three dense matrices:
-even when $C$ is full and its CSR form needs $12n^2$ bytes, the sparse $A$ and $B$ save
-more than that up to about $d = 50\%$.
+\textbf{Conversion.}
+\begin{itemize}
+    \item Negligible at medium and high densities. At $d = 0.1\%$ it is bounded below by
+    reading the two dense matrices twice (7.8~ms against 0.17~ms for the kernel), and CSR
+    still remains about 220 times faster.
+    \item Its peak at $d = 50\%$ for uniform inputs is consistent with the branch on
+    \texttt{v != 0} being unpredictable when half of the random entries are zero, unlike
+    band inputs, whose nonzeros form almost contiguous runs; this was not measured.
+\end{itemize}
 
-\textit{Scaling.} At fixed density the products grow as $n^3 d^2$, but the exponents are
-not 3. For band inputs (2.5) the fixed per-row costs dominate at small $n$ and are
-amortised: the time per product of band 1\% falls from 3.8 to 0.71~ns between $n = 1000$
-and $32\,000$. For uniform 0.1\% the exponent is above 3: the rows of $C$ have about
-$d^2 n^2$ nonzeros (about 1000 at $n = 32\,000$), sorted with \texttt{qsort}, so the cost
-per product grows with $\log n$; this was not confirmed with a profile. The size
-experiment also shows the limit of sparse storage: at $n = 32\,000$ the uniform 1\%
-product has 96\% nonzeros and its CSR storage (11.2~GiB) is larger than the 7.6~GiB of a
-dense $C$. Three dense matrices would need 22.9~GiB, above the 16~GiB budget, and the
-cubic extrapolation of the blocked kernel gives about 2~hours per run; neither was run.
-Band inputs, whose product stays sparse, needed 473~MiB at the same size.
+\textbf{Memory.} P6 compared the 12 bytes of a CSR nonzero with the 8 of a dense entry for
+the product only. The relevant comparison is with all three dense matrices: even when $C$
+is full and its CSR form needs $12n^2$ bytes, the sparse $A$ and $B$ save more than that up
+to about $d = 50\%$.
+
+\textbf{Scaling with $n$.}
+\begin{itemize}
+    \item Band inputs (exponent 2.5): fixed per-row costs dominate at small $n$ and are
+    amortised; the time per product of band 1\% falls from 3.8 to 0.71~ns between
+    $n = 1000$ and $32\,000$.
+    \item Uniform 0.1\% (exponent 3.33): the rows of $C$ have about $d^2 n^2$ nonzeros
+    (about 1000 at $n = 32\,000$), sorted with \texttt{qsort}, so the cost per product grows
+    with $\log n$; not confirmed with a profile.
+    \item Limit of sparse storage: at $n = 32\,000$ the uniform 1\% product has 96\%
+    nonzeros and its CSR storage (11.2~GiB) exceeds the 7.6~GiB of a dense $C$, while the
+    band product needed 473~MiB. Three dense matrices would need 22.9~GiB, above the
+    budget, and the cubic extrapolation of the blocked kernel gives about 2~hours per run;
+    neither was run.
+\end{itemize}
 
 \subsection{Limitations}
 
