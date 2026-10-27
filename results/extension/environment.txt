@@ -1,0 +1,27 @@
+date: 2026-10-27 00:03:55
+os: Windows-10-10.0.26300-SP0
+cpu: 13th Gen Intel(R) Core(TM) i7-13700KF
+cores: 16 physical, 24 logical
+hybrid layout: 16 logical processors on P-cores (0-15), 8 on E-cores
+cache: L2 24 MB total, L3 30 MB
+ram: 31.8 GiB
+affinity of the runner and all benchmark processes: P-cores only, logical processors 0-15 (16)
+power plan: 381b4222-f694-41f0-9685-ff5bb260df2e  (Equilibrado)
+c compiler: gcc.exe (Rev5, Built by MSYS2 project) 16.1.0
+build scalar: -O2 -ffp-contract=off
+build avx2: -O2 -ffp-contract=off -fvect-cost-model=dynamic -mavx2
+build sse2: -O2 -ffp-contract=off -fvect-cost-model=dynamic
+python: CPython 3.11.9 (runner and analysis only)
+analysis libraries: numpy 2.2.0, scipy 1.15.3, pandas 2.2.3, matplotlib 3.10.3
+kernel threads: 1
+peak memory metric: peak working set (GetProcessMemoryInfo)
+session: extension added after a review of the first run (results/extension)
+reference: [('blocked', 'scalar', 32), ('blocked', 'avx2', 256), ('ikj', 'scalar', 0)] (method, build, block) at n = 2000, compared with the first session
+block sizes (sse2): [16, 32, 64, 128, 256] at n = [1000, 2000], chosen at n = 2000
+dense (sse2): ['ikj', 'blocked'] at n = [100, 200, 500, 1000, 1500, 2000, 3000, 4000]
+size limit: csr at n = [64000], inputs [('uniform', '0.01'), ('uniform', '0.001'), ('band', '0.001'), ('band', '0.01')]
+time limit: ijk (scalar) at n = [8000]
+warm-ups: 2; measured runs per process: 5
+processes: 3 interleaved when the first process has a median below 60 s, otherwise 1
+batching: a first call shorter than 10 ms is a separate check call, and the runs are timed in batches lasting >= 10 ms (time per call reported)
+budget: 900 s per run, 16 GiB of matrix storage per process

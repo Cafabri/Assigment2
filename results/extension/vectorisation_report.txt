@@ -1,0 +1,68 @@
+== build scalar: gcc -O2 -ffp-contract=off
+(no loop of matmul.c or sparse.c vectorised)
+  -fopt-info-vec-missed, matmul.c, loops not vectorised (innermost loops: line 15 ijk, 24 ikj, 43 blocked, 55 transposed, 61 transpose):
+  matmul.c:13:23: missed: couldn't vectorize loop
+  matmul.c:14:27: missed: couldn't vectorize loop
+  matmul.c:15:31: missed: couldn't vectorize loop
+  matmul.c:21:23: missed: couldn't vectorize loop
+  matmul.c:22:27: missed: couldn't vectorize loop
+  matmul.c:24:31: missed: couldn't vectorize loop
+  matmul.c:34:25: missed: couldn't vectorize loop
+  matmul.c:36:29: missed: couldn't vectorize loop
+  matmul.c:38:33: missed: couldn't vectorize loop
+  matmul.c:40:36: missed: couldn't vectorize loop
+  matmul.c:41:40: missed: couldn't vectorize loop
+  matmul.c:43:44: missed: couldn't vectorize loop
+  matmul.c:53:23: missed: couldn't vectorize loop
+  matmul.c:54:27: missed: couldn't vectorize loop
+  matmul.c:55:31: missed: couldn't vectorize loop
+  matmul.c:60:23: missed: couldn't vectorize loop
+  matmul.c:61:27: missed: couldn't vectorize loop
+
+== build avx2: gcc -O2 -ffp-contract=off -fvect-cost-model=dynamic -mavx2
+matmul.c:24:31: optimized: loop vectorized using 32 byte vectors and unroll factor 4
+matmul.c:24:31: optimized:  loop versioned for vectorization because of possible aliasing
+matmul.c:24:31: optimized: epilogue loop vectorized using 16 byte vectors and unroll factor 2
+matmul.c:43:44: optimized: loop vectorized using 32 byte vectors and unroll factor 4
+matmul.c:43:44: optimized:  loop versioned for vectorization because of possible aliasing
+matmul.c:43:44: optimized: epilogue loop vectorized using 16 byte vectors and unroll factor 2
+sparse.c:34:27: optimized: loop vectorized using 32 byte vectors and unroll factor 4
+  -fopt-info-vec-missed, matmul.c, loops not vectorised (innermost loops: line 15 ijk, 24 ikj, 43 blocked, 55 transposed, 61 transpose):
+  matmul.c:13:23: missed: couldn't vectorize loop
+  matmul.c:14:27: missed: couldn't vectorize loop
+  matmul.c:15:31: missed: couldn't vectorize loop
+  matmul.c:21:23: missed: couldn't vectorize loop
+  matmul.c:22:27: missed: couldn't vectorize loop
+  matmul.c:34:25: missed: couldn't vectorize loop
+  matmul.c:36:29: missed: couldn't vectorize loop
+  matmul.c:38:33: missed: couldn't vectorize loop
+  matmul.c:40:36: missed: couldn't vectorize loop
+  matmul.c:41:40: missed: couldn't vectorize loop
+  matmul.c:53:23: missed: couldn't vectorize loop
+  matmul.c:54:27: missed: couldn't vectorize loop
+  matmul.c:55:31: missed: couldn't vectorize loop
+  matmul.c:60:23: missed: couldn't vectorize loop
+  matmul.c:61:27: missed: couldn't vectorize loop
+
+== build sse2: gcc -O2 -ffp-contract=off -fvect-cost-model=dynamic
+matmul.c:24:31: optimized: loop vectorized using 16 byte vectors and unroll factor 2
+matmul.c:24:31: optimized:  loop versioned for vectorization because of possible aliasing
+matmul.c:43:44: optimized: loop vectorized using 16 byte vectors and unroll factor 2
+matmul.c:43:44: optimized:  loop versioned for vectorization because of possible aliasing
+sparse.c:34:27: optimized: loop vectorized using 16 byte vectors and unroll factor 2
+  -fopt-info-vec-missed, matmul.c, loops not vectorised (innermost loops: line 15 ijk, 24 ikj, 43 blocked, 55 transposed, 61 transpose):
+  matmul.c:13:23: missed: couldn't vectorize loop
+  matmul.c:14:27: missed: couldn't vectorize loop
+  matmul.c:15:31: missed: couldn't vectorize loop
+  matmul.c:21:23: missed: couldn't vectorize loop
+  matmul.c:22:27: missed: couldn't vectorize loop
+  matmul.c:34:25: missed: couldn't vectorize loop
+  matmul.c:36:29: missed: couldn't vectorize loop
+  matmul.c:38:33: missed: couldn't vectorize loop
+  matmul.c:40:36: missed: couldn't vectorize loop
+  matmul.c:41:40: missed: couldn't vectorize loop
+  matmul.c:53:23: missed: couldn't vectorize loop
+  matmul.c:54:27: missed: couldn't vectorize loop
+  matmul.c:55:31: missed: couldn't vectorize loop
+  matmul.c:60:23: missed: couldn't vectorize loop
+  matmul.c:61:27: missed: couldn't vectorize loop
