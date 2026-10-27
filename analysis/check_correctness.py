@@ -1,12 +1,16 @@
 """Validates every kernel against NumPy / SciPy on the benchmark inputs, checks that the
 kernels agree bit for bit, and checks the checksum and nonzero counts of every run.
 
-Usage (from the repository root, after run_experiment.py has built the programs):
-    python analysis/check_correctness.py
+Usage (from the repository root, after run_experiment.py --extension has built the
+three programs):
+    python analysis/check_correctness.py [--sizes 50,257] [--out DIR]
 
-Outputs:
-  results/correctness.csv   element-wise comparison with NumPy for the verification inputs
-  results/checksums.csv     checksum and nnz of every configuration vs NumPy / SciPy
+The checksums of results/ and of results/extension/ (if present) are both checked; a
+configuration measured in both sessions must give the same checksum in both.
+
+Outputs (in results/, or in DIR):
+  correctness.csv   element-wise comparison with NumPy for the verification inputs
+  checksums.csv     checksum and nnz of every configuration vs NumPy / SciPy
 """
 import os
 import subprocess
@@ -19,17 +23,22 @@ import scipy.sparse as sp
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RESULTS = os.path.join(ROOT, "results")
+EXTENSION = os.path.join(RESULTS, "extension")
+OUT = (os.path.abspath(sys.argv[sys.argv.index("--out") + 1]) if "--out" in sys.argv
+       else RESULTS)
 sys.path.insert(0, ROOT)
 from run_experiment import BUILDS, exe  # noqa: E402
 
 SEED_A, SEED_B = 42, 43
 MASK_SEED_A, MASK_SEED_B = 1042, 1043
-VERIFY_SIZES = [50, 257]
+VERIFY_SIZES = ([int(x) for x in sys.argv[sys.argv.index("--sizes") + 1].split(",")]
+                if "--sizes" in sys.argv else [50, 257])
 VERIFY_INPUTS = [("dense", "1"), ("uniform", "0.05"), ("uniform", "0.3"),
                  ("band", "0.05"), ("band", "0.3")]
 VERIFY_BLOCKS = [16, 32, 64, 128, 256]
 VERIFY_METHODS = {"scalar": ["ijk", "ikj", "blocked", "transposed", "csr"],
-                  "avx2": ["ikj", "blocked", "transposed", "csr"]}
+                  "avx2": ["ikj", "blocked", "transposed", "csr"],
+                  "sse2": ["ikj", "blocked", "transposed", "csr"]}    # extension build
 # Largest output for which the checksum of a run is recomputed with SciPy
 MAX_REFERENCE_NNZ = 10 ** 8
 
@@ -141,7 +150,7 @@ def check_against_numpy():
                              "max_abs_error": abs(nnz_csr - nnz_ref), "max_rel_error": np.nan,
                              "tolerance": "exact", "passed": nnz_csr == nnz_ref})
     df = pd.DataFrame(rows)
-    df.to_csv(os.path.join(RESULTS, "correctness.csv"), index=False)
+    df.to_csv(os.path.join(OUT, "correctness.csv"), index=False)
     print(df.to_string(index=False))
     return df["passed"].all()
 
@@ -149,9 +158,16 @@ def check_against_numpy():
 def check_checksums():
     """Every run with a checksum: same value in every run of the configuration, and equal to
     the NumPy / SciPy reference within RTOL; nnz of A, B and C equal to the reference."""
-    raw = pd.read_csv(os.path.join(RESULTS, "raw_measurements.csv"), float_precision="round_trip",
-                      dtype={"density": str})
-    status = pd.read_csv(os.path.join(RESULTS, "run_status.csv"), dtype={"density": str})
+    raws, statuses = [], []
+    for session, folder in [("first", RESULTS), ("extension", EXTENSION)]:
+        if not os.path.exists(os.path.join(folder, "run_status.csv")):
+            continue
+        raws.append(pd.read_csv(os.path.join(folder, "raw_measurements.csv"),
+                                float_precision="round_trip", dtype={"density": str})
+                    .assign(session=session))
+        statuses.append(pd.read_csv(os.path.join(folder, "run_status.csv"),
+                                    dtype={"density": str}))
+    raw, status = pd.concat(raws), pd.concat(statuses)
     rows = []
     keys = ["n", "distribution", "density"]
     for (n, dist, density), d in raw.groupby(keys):
@@ -169,7 +185,8 @@ def check_checksums():
             values = g["checksum"].dropna().unique()
             nnz = g[["nnz_a", "nnz_b", "nnz_c"]].drop_duplicates()
             row = {"n": n, "distribution": dist, "density": density, "method": method,
-                   "build": build, "runs": len(g["checksum"].dropna()),
+                   "build": build, "sessions": "+".join(sorted(g["session"].unique())),
+                   "runs": len(g["checksum"].dropna()),
                    "distinct_checksums": len(values),
                    "checksum": repr(float(values[0])) if len(values) else "",
                    "nnz_c": int(nnz["nnz_c"].iloc[0])}
@@ -184,7 +201,7 @@ def check_checksums():
                            passed=bool(len(values) == 1 and rel <= RTOL and nnz_ok))
             rows.append(row)
     df = pd.DataFrame(rows)
-    df.to_csv(os.path.join(RESULTS, "checksums.csv"), index=False)
+    df.to_csv(os.path.join(OUT, "checksums.csv"), index=False)
     print(df.to_string(index=False))
     failed = status[status["status"] == "ERROR"]
     if len(failed):
