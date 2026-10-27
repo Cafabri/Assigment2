@@ -1,0 +1,13 @@
+\texttt{ijk} (scalar) & 4000 & 234 & 370 & 8000 (TIMEOUT) \\
+\texttt{ikj} (scalar) & 4000 & 27.0 & 370 & none \\
+\texttt{ikj} (sse2) & 4000 & 19.8 & 370 & none \\
+\texttt{ikj} (avx2) & 4000 & 18.9 & 370 & none \\
+\texttt{blocked} (scalar) & 4000 & 14.2 & 370 & none \\
+\texttt{blocked} (sse2) & 4000 & 7.99 & 370 & none \\
+\texttt{blocked} (avx2) & 4000 & 5.10 & 370 & none \\
+\texttt{transposed} (scalar) & 4000 & 32.4 & 492 & none \\
+\texttt{transposed} (avx2) & 4000 & 31.9 & 492 & none \\
+CSR, uniform 0.1\% & 64000 & 8.63 & 3\,008 & none \\
+CSR, uniform 1\% & 32000 & 17.3 & 11\,481 & 64000 (MEMORY\_LIMIT) \\
+CSR, band 0.1\% & 64000 & 0.326 & 194 & none \\
+CSR, band 1\% & 64000 & 17.5 & 1\,880 & none \\

@@ -4,6 +4,8 @@
   blocked (scalar): 500-1500: 3.00, 1500-4000: 3.01, 500-4000: 3.01
   transposed (scalar): 500-1500: 3.07, 1500-4000: 3.22, 500-4000: 3.18
   transpose (scalar): 500-1500: 2.19, 1500-4000: 3.03, 500-4000: 2.64
+  ikj (sse2): 500-1500: 3.13, 1500-4000: 3.67, 500-4000: 3.48
+  blocked (sse2): 500-1500: 3.00, 1500-4000: 2.99, 500-4000: 3.00
   ikj (avx2): 500-1500: 3.31, 1500-4000: 3.88, 500-4000: 3.70
   blocked (avx2): 500-1500: 3.02, 1500-4000: 2.99, 500-4000: 3.01
   transposed (avx2): 500-1500: 3.07, 1500-4000: 3.24, 500-4000: 3.18
@@ -17,6 +19,10 @@
       n >= 500: min 0.219, max 0.222, max/min 1.01
   transposed (scalar): 100: 0.257, 200: 0.355, 500: 0.367, 1000: 0.378, 1500: 0.399, 2000: 0.47, 3000: 0.493, 4000: 0.506
       n >= 500: min 0.367, max 0.506, max/min 1.38
+  ikj (sse2): 100: 0.123, 200: 0.148, 500: 0.131, 1000: 0.132, 1500: 0.153, 2000: 0.245, 3000: 0.283, 4000: 0.31
+      n >= 500: min 0.131, max 0.31, max/min 2.37
+  blocked (sse2): 100: 0.127, 200: 0.127, 500: 0.125, 1000: 0.125, 1500: 0.126, 2000: 0.126, 3000: 0.125, 4000: 0.125
+      n >= 500: min 0.125, max 0.126, max/min 1.01
   ikj (avx2): 100: 0.088, 200: 0.0878, 500: 0.0816, 1000: 0.0974, 1500: 0.116, 2000: 0.224, 3000: 0.271, 4000: 0.296
       n >= 500: min 0.0816, max 0.296, max/min 3.63
   blocked (avx2): 100: 0.0887, 200: 0.0866, 500: 0.0785, 1000: 0.0805, 1500: 0.0803, 2000: 0.0802, 3000: 0.0803, 4000: 0.0798
@@ -28,6 +34,8 @@
   ikj (scalar): 100: 1.22, 200: 1.51, 500: 1.64, 1000: 2.01, 1500: 2.06, 2000: 3.84, 3000: 6.89, 4000: 8.65
   blocked (scalar): 100: 1.33, 200: 1.55, 500: 1.71, 1000: 2.13, 1500: 2.38, 2000: 6.17, 3000: 12.36, 4000: 16.43
   transposed (scalar): 100: 1.17, 200: 0.96, 500: 1.02, 1000: 1.23, 1500: 1.31, 2000: 2.91, 3000: 5.54, 4000: 7.23
+  ikj (sse2): 100: 2.44, 200: 2.30, 500: 2.86, 1000: 3.54, 1500: 3.43, 2000: 5.56, 3000: 9.66, 4000: 11.79
+  blocked (sse2): 100: 2.36, 200: 2.67, 500: 2.99, 1000: 3.73, 1500: 4.17, 2000: 10.85, 3000: 21.86, 4000: 29.26
   ikj (avx2): 100: 3.43, 200: 3.87, 500: 4.59, 1000: 4.79, 1500: 4.51, 2000: 6.10, 3000: 10.08, 4000: 12.35
   blocked (avx2): 100: 3.40, 200: 3.93, 500: 4.77, 1000: 5.80, 1500: 6.52, 2000: 17.02, 3000: 34.03, 4000: 45.82
   transposed (avx2): 100: 0.99, 200: 1.00, 500: 1.04, 1000: 1.26, 1500: 1.35, 2000: 2.99, 3000: 5.54, 4000: 7.33
@@ -39,6 +47,28 @@
   blocked (scalar) / blocked (avx2): 100: 2.55, 200: 2.54, 500: 2.79, 1000: 2.72, 1500: 2.73, 2000: 2.76, 3000: 2.75, 4000: 2.79
   transposed (scalar) / transposed (avx2): 100: 0.84, 200: 1.04, 500: 1.02, 1000: 1.02, 1500: 1.03, 2000: 1.03, 3000: 1.00, 4000: 1.01
   ikj (avx2) / blocked (avx2): 100: 0.99, 200: 1.01, 500: 1.04, 1000: 1.21, 1500: 1.45, 2000: 2.79, 3000: 3.38, 4000: 3.71
+  ikj (scalar) / ikj (sse2): 100: 2.01, 200: 1.52, 500: 1.75, 1000: 1.76, 1500: 1.66, 2000: 1.45, 3000: 1.40, 4000: 1.36
+  ikj (sse2) / ikj (avx2): 100: 1.40, 200: 1.69, 500: 1.60, 1000: 1.35, 1500: 1.32, 2000: 1.10, 3000: 1.04, 4000: 1.05
+  blocked (scalar) / blocked (sse2): 100: 1.78, 200: 1.73, 500: 1.75, 1000: 1.75, 1500: 1.75, 2000: 1.76, 3000: 1.77, 4000: 1.78
+  blocked (sse2) / blocked (avx2): 100: 1.44, 200: 1.47, 500: 1.60, 1000: 1.55, 1500: 1.56, 2000: 1.57, 3000: 1.56, 4000: 1.57
+  ikj (sse2) / blocked (sse2): 100: 0.97, 200: 1.16, 500: 1.04, 1000: 1.05, 1500: 1.22, 2000: 1.95, 3000: 2.26, 4000: 2.48
+
+== Part A: speedup over ijk from the medians of each process (range over the pairs of process medians: min ijk / max method - max ijk / min method)
+  n=1500: ijk process medians 1.92, 1.767, 1.745 s; ikj (scalar) 2.01-2.24 (median 2.06); blocked (scalar) 2.34-2.60 (median 2.38); transposed (scalar) 1.29-1.45 (median 1.31); ikj (sse2) 3.32-3.79 (median 3.43); blocked (sse2) 4.09-4.55 (median 4.17); ikj (avx2) 3.99-4.94 (median 4.51); blocked (avx2) 6.43-7.10 (median 6.52); transposed (avx2) 1.28-1.47 (median 1.35)
+  n=2000: ijk process medians 11.09, 10.99, 10.49 s; ikj (scalar) 3.65-3.97 (median 3.84); blocked (scalar) 5.88-6.29 (median 6.17); transposed (scalar) 2.76-3.04 (median 2.91); ikj (sse2) 5.34-5.65 (median 5.56); blocked (sse2) 10.38-11.04 (median 10.85); ikj (avx2) 5.82-6.60 (median 6.10); blocked (avx2) 16.30-17.49 (median 17.02); transposed (avx2) 2.78-3.05 (median 2.99)
+  n=3000: ijk process medians 73.75 s; ikj (scalar) 6.86-6.96 (median 6.89); blocked (scalar) 12.33-12.45 (median 12.36); transposed (scalar) 5.52-5.55 (median 5.54); ikj (sse2) 9.59-9.69 (median 9.66); blocked (sse2) 21.79-21.90 (median 21.86); ikj (avx2) 9.92-10.33 (median 10.08); blocked (avx2) 33.98-34.13 (median 34.03); transposed (avx2) 5.51-5.62 (median 5.54)
+  n=4000: ijk process medians 233.9 s; ikj (scalar) 8.37-8.70 (median 8.65); blocked (scalar) 16.38-16.64 (median 16.43); transposed (scalar) 7.19-7.33 (median 7.23); ikj (sse2) 11.75-11.81 (median 11.79); blocked (sse2) 29.17-29.28 (median 29.26); ikj (avx2) 12.16-12.38 (median 12.35); blocked (avx2) 45.79-45.83 (median 45.82); transposed (avx2) 7.28-7.37 (median 7.33)
+  ijk n=2000 in the density experiment, process medians (s) per input: band 0.001: 12.88, 10.34, 11.5 (max/min 1.246); band 0.1: 10.38, 10.91, 10.56 (max/min 1.051); band 1: 9.565, 9.722, 10.61 (max/min 1.109); uniform 0.001: 11.36, 10.79, 10.83 (max/min 1.053); uniform 0.1: 11.83, 10.75, 9.931 (max/min 1.191); uniform 1: 12.03, 10.68, 10.38 (max/min 1.159)
+      all inputs: 9.565-12.88 s (max/min 1.347); dense experiment process medians 10.49-11.09 s
+  ijk n=2000 on the dense matrix (d = 100 %) in the density experiment: band 9.761 s, uniform 10.69 s; dense experiment 10.92 s
+
+== Part A: ikj reads one 8-byte element of B per multiply-add: implied rate 8 bytes / (ns per multiply-add)
+  ikj (scalar) n=2000: 22.5 GB/s
+  ikj (scalar) n=4000: 18.9 GB/s
+  ikj (sse2) n=2000: 32.6 GB/s
+  ikj (sse2) n=4000: 25.8 GB/s
+  ikj (avx2) n=2000: 35.8 GB/s
+  ikj (avx2) n=4000: 27.0 GB/s
 
 == Part A: transposition alone / transposed kernel, and / ijk
   n=100: transpose 3.85e-06 s = 1.5 % of transposed, 1.28 % of ijk; (transposed + transpose) speedup over ijk 1.16
@@ -59,12 +89,22 @@
 == Block size: median (s) and IQR %
   scalar n=1000: b=16 0.2522 (0.9 %), b=32 0.222 (0.3 %), b=64 0.2608 (3.1 %), b=128 0.2467 (1.2 %), b=256 0.2357 (0.7 %); best b=32, worst/best 1.17
   scalar n=2000: b=16 2.024 (0.5 %), b=32 1.774 (0.7 %), b=64 2.107 (1.4 %), b=128 1.975 (0.8 %), b=256 1.92 (1.1 %); best b=32, worst/best 1.19
+  sse2 n=1000: b=16 0.1796 (0.3 %), b=32 0.1428 (0.6 %), b=64 0.1251 (0.6 %), b=128 0.1346 (1.7 %), b=256 0.1442 (1.1 %); best b=64, worst/best 1.44
+  sse2 n=2000: b=16 1.441 (0.2 %), b=32 1.157 (0.3 %), b=64 1.002 (0.3 %), b=128 1.081 (0.7 %), b=256 1.155 (0.4 %); best b=64, worst/best 1.44
   avx2 n=1000: b=16 0.1471 (1.3 %), b=32 0.1007 (2.1 %), b=64 0.08758 (2.6 %), b=128 0.08152 (2.3 %), b=256 0.08148 (2.3 %); best b=256, worst/best 1.81
   avx2 n=2000: b=16 1.192 (1.3 %), b=32 0.8095 (0.7 %), b=64 0.7069 (1.0 %), b=128 0.6612 (1.6 %), b=256 0.6457 (0.8 %); best b=256, worst/best 1.85
   scalar: b* = 32; medians at n = 2000: b=16 2.024 s, b=32 1.774 s, b=64 2.107 s, b=128 1.975 s, b=256 1.92 s
   avx2: b* = 256; medians at n = 2000: b=16 1.192 s, b=32 0.8095 s, b=64 0.7069 s, b=128 0.6612 s, b=256 0.6457 s
+  sse2: b* = 64; medians at n = 2000: b=16 1.441 s, b=32 1.157 s, b=64 1.002 s, b=128 1.081 s, b=256 1.155 s
 
-== Variability
+== Variability, session extension
+  configurations: 32; IQR/median > 5 % among medians > 1 ms: 
+  max IQR/median among medians > 1 ms: 2.89 %
+  share with IQR/median <= 3 %: 100.0 %
+  configurations with 3 processes: 32, single process: 0; process spread > 10 %: 
+  runs per configuration: [15]
+
+== Variability, session first
   configurations: 214; IQR/median > 5 % among medians > 1 ms: dense/ijk/scalar/n=1500/dense/1: 9.4 %, dense/ikj/avx2/n=1500/dense/1: 10.8 %, dense/ikj/avx2/n=2000/dense/1: 6.5 %, dense/transpose/scalar/n=1500/dense/1: 20.6 %, dense/transpose/scalar/n=2000/dense/1: 33.4 %, dense/transpose/scalar/n=4000/dense/1: 9.8 %, density/convert/scalar/n=2000/band/0.3: 6.7 %, density/convert/scalar/n=2000/band/1: 5.9 %, density/convert/scalar/n=2000/uniform/0.005: 5.6 %, density/convert/scalar/n=2000/uniform/0.02: 7.9 %, density/ijk/scalar/n=2000/band/0.001: 20.8 %, density/ijk/scalar/n=2000/band/1: 9.3 %, density/ijk/scalar/n=2000/uniform/0.1: 11.2 %, density/ijk/scalar/n=2000/uniform/1: 13.5 %
   max IQR/median among medians > 1 ms: 33.41 %
   share with IQR/median <= 3 %: 78.5 %
@@ -95,6 +135,26 @@
   band: conversion time: 0.1%: 0.0079 s, 0.5%: 0.00797 s, 1%: 0.00803 s, 2%: 0.00837 s, 5%: 0.00857 s, 10%: 0.00926 s, 20%: 0.00989 s, 30%: 0.0109 s, 50%: 0.0128 s, 75%: 0.0153 s, 100%: 0.0175 s
   band: csr ns per multiply-add actually performed is not measured; csr time / (n^3 d^2) ns: 0.1%: 11.6, 0.5%: 3.83, 1%: 2.2, 2%: 1.6, 5%: 0.862, 10%: 0.715, 20%: 0.66, 30%: 0.645, 50%: 0.648, 75%: 0.727, 100%: 0.757
 
+== Density experiment: csr time / (n^3 d^2) ns, range over d >= 20 % and d >= 30 %
+  uniform, d >= 20 %: 0.717-0.837
+  uniform, d >= 30 %: 0.717-0.755
+  uniform: maximum 26.6 at d = 0.5 %
+  band, d >= 20 %: 0.645-0.757
+  band, d >= 30 %: 0.645-0.757
+  band: maximum 11.6 at d = 0.1 %
+
+== Density experiment: CSR cost per product (time / n^3 d^2) over the dense cost per multiply-add at n = 2000, and the crossover of a constant-cost model, sqrt(dense ns / CSR ns at d = 50 %)
+  blocked scalar (0.221 ns), uniform: CSR / dense for d >= 20 %: 3.2-3.8; model crossover with 0.717 ns: 55.5 %
+  blocked scalar (0.221 ns), band: CSR / dense for d >= 20 %: 2.9-3.4; model crossover with 0.648 ns: 58.4 %
+  blocked sse2 (0.126 ns), uniform: CSR / dense for d >= 20 %: 5.7-6.7; model crossover with 0.717 ns: 41.9 %
+  blocked sse2 (0.126 ns), band: CSR / dense for d >= 20 %: 5.1-6; model crossover with 0.648 ns: 44.1 %
+  blocked avx2 (0.0802 ns), uniform: CSR / dense for d >= 20 %: 8.9-10; model crossover with 0.717 ns: 33.4 %
+  blocked avx2 (0.0802 ns), band: CSR / dense for d >= 20 %: 8.1-9.4; model crossover with 0.648 ns: 35.2 %
+
+== Density experiment: nonzeros per row of C (nnz_c / n) and the sorting rule (scan of the markers when a row has more than n/16 nonzeros, otherwise qsort)
+  uniform (n/16 = 125): 0.1%: 4, 0.5%: 96, 1%: 360, 2%: 1099, 5%: 1986, 10%: 2000, 20%: 2000, 30%: 2000, 50%: 2000, 75%: 2000, 100%: 2000
+  band (n/16 = 125): 0.1%: 3, 0.5%: 21, 1%: 41, 2%: 80, 5%: 200, 10%: 392, 20%: 756, 30%: 1095, 50%: 1658, 75%: 2000, 100%: 2000
+
 == Density experiment: dense methods do not depend on the zeros?
   blocked (scalar): median range 1.758-1.787 s (max/min 1.016)
   blocked (avx2): median range 0.6376-0.6475 s (max/min 1.016)
@@ -111,37 +171,82 @@
   dense blocked peak (MiB): 95.6-95.6
 
 == Size experiment: csr
-  uniform 0.001: exponent 3.33; segments 1000-2000: 3.72, 2000-4000: 3.22, 4000-8000: 3.30, 8000-16000: 3.28, 16000-32000: 3.23
-      n=1000: 1.32e-05 s, C 0.0978 %, nnzC 978, storage 0 MiB, peak 4 MiB, n=2000: 0.000173 s, C 0.2 %, nnzC 7990, storage 0 MiB, peak 4 MiB, n=4000: 0.00161 s, C 0.4 %, nnzC 64059, storage 1 MiB, peak 5 MiB, n=8000: 0.0159 s, C 0.8 %, nnzC 511843, storage 8 MiB, peak 12 MiB, n=16000: 0.154 s, C 1.59 %, nnzC 4071210, storage 53 MiB, peak 57 MiB, n=32000: 1.45 s, C 3.15 %, nnzC 32292712, storage 394 MiB, peak 398 MiB
+  uniform 0.001: exponent (n = 1000-32000) 3.33; segments 1000-2000: 3.72, 2000-4000: 3.22, 4000-8000: 3.30, 8000-16000: 3.28, 16000-32000: 3.23, 32000-64000: 2.57
+      n=1000: 1.32e-05 s (IQR 4.7 %, 15 runs), C 0.0978 %, nnzC 978, storage 0.1 MiB, peak 4.4 MiB, n=2000: 0.000173 s (IQR 3.5 %, 15 runs), C 0.2 %, nnzC 7990, storage 0.3 MiB, peak 4.3 MiB, n=4000: 0.00161 s (IQR 1.4 %, 15 runs), C 0.4 %, nnzC 64059, storage 1.2 MiB, peak 5.3 MiB, n=8000: 0.0159 s (IQR 1.2 %, 15 runs), C 0.8 %, nnzC 511843, storage 7.6 MiB, peak 11.7 MiB, n=16000: 0.154 s (IQR 0.7 %, 15 runs), C 1.59 %, nnzC 4071210, storage 53.0 MiB, peak 57.1 MiB, n=32000: 1.45 s (IQR 0.4 %, 15 runs), C 3.15 %, nnzC 32292712, storage 394.1 MiB, peak 398.3 MiB, n=64000: 8.63 s (IQR 0.6 %, 15 runs), C 6.2 %, nnzC 254119636, storage 3004.1 MiB, peak 3008.2 MiB
+      time / (n^3 d^2) ns: n=1000: 13.2, n=2000: 21.7, n=4000: 25.2, n=8000: 31.1, n=16000: 37.6, n=32000: 44.2, n=64000: 32.9
+      nonzeros per row of C (nnz_c / n; n/16 in parentheses): n=1000: 1 (62), n=2000: 4 (125), n=4000: 16 (250), n=8000: 64 (500), n=16000: 254 (1000), n=32000: 1009 (2000), n=64000: 3971 (4000)
       blocked / csr: n=1000: 1.66e+04, n=2000: 1.02e+04, n=4000: 8.71e+03
-  uniform 0.01: exponent 2.74; segments 1000-2000: 2.76, 2000-4000: 2.82, 4000-8000: 2.88, 8000-16000: 2.66, 16000-32000: 2.49
-      n=1000: 0.00139 s, C 9.37 %, nnzC 93707, storage 1 MiB, peak 5 MiB, n=2000: 0.0094 s, C 18 %, nnzC 720741, storage 9 MiB, peak 13 MiB, n=4000: 0.0662 s, C 32.9 %, nnzC 5257676, storage 64 MiB, peak 68 MiB, n=8000: 0.488 s, C 55 %, nnzC 35217638, storage 418 MiB, peak 422 MiB, n=16000: 3.08 s, C 79.8 %, nnzC 204278347, storage 2397 MiB, peak 2401 MiB, n=32000: 17.3 s, C 95.9 %, nnzC 982290909, storage 11477 MiB, peak 11481 MiB
+  uniform 0.01: exponent (n = 1000-32000) 2.74; segments 1000-2000: 2.76, 2000-4000: 2.82, 4000-8000: 2.88, 8000-16000: 2.66, 16000-32000: 2.49
+      n=1000: 0.00139 s (IQR 1.9 %, 15 runs), C 9.37 %, nnzC 93707, storage 1.3 MiB, peak 5.4 MiB, n=2000: 0.0094 s (IQR 1.5 %, 15 runs), C 18 %, nnzC 720741, storage 9.2 MiB, peak 13.3 MiB, n=4000: 0.0662 s (IQR 1.6 %, 15 runs), C 32.9 %, nnzC 5257676, storage 64.0 MiB, peak 68.1 MiB, n=8000: 0.488 s (IQR 0.5 %, 15 runs), C 55 %, nnzC 35217638, storage 418.0 MiB, peak 422.1 MiB, n=16000: 3.08 s (IQR 0.3 %, 15 runs), C 79.8 %, nnzC 204278347, storage 2396.9 MiB, peak 2401.0 MiB, n=32000: 17.3 s (IQR 0.4 %, 15 runs), C 95.9 %, nnzC 982290909, storage 11476.9 MiB, peak 11481.1 MiB
+      time / (n^3 d^2) ns: n=1000: 13.9, n=2000: 11.8, n=4000: 10.3, n=8000: 9.54, n=16000: 7.51, n=32000: 5.27
+      nonzeros per row of C (nnz_c / n; n/16 in parentheses): n=1000: 94 (62), n=2000: 360 (125), n=4000: 1314 (250), n=8000: 4402 (500), n=16000: 12767 (1000), n=32000: 30697 (2000)
       blocked / csr: n=1000: 158, n=2000: 188, n=4000: 212
-  band 0.001: exponent 2.46; segments 1000-2000: 3.27, 2000-4000: 2.63, 4000-8000: 2.16, 8000-16000: 2.10, 16000-32000: 2.48
-      n=1000: 9.72e-06 s, C 0.1 %, nnzC 1000, storage 0 MiB, peak 4 MiB, n=2000: 9.38e-05 s, C 0.154 %, nnzC 6156, storage 0 MiB, peak 4 MiB, n=4000: 0.000579 s, C 0.197 %, nnzC 31463, storage 1 MiB, peak 5 MiB, n=8000: 0.00258 s, C 0.206 %, nnzC 131709, storage 3 MiB, peak 7 MiB, n=16000: 0.011 s, C 0.205 %, nnzC 523621, storage 12 MiB, peak 17 MiB, n=32000: 0.0617 s, C 0.203 %, nnzC 2074933, storage 48 MiB, peak 53 MiB
+  band 0.001: exponent (n = 1000-32000) 2.46; segments 1000-2000: 3.27, 2000-4000: 2.63, 4000-8000: 2.16, 8000-16000: 2.10, 16000-32000: 2.48, 32000-64000: 2.40
+      n=1000: 9.72e-06 s (IQR 3.8 %, 15 runs), C 0.1 %, nnzC 1000, storage 0.1 MiB, peak 4.3 MiB, n=2000: 9.38e-05 s (IQR 8.3 %, 15 runs), C 0.154 %, nnzC 6156, storage 0.2 MiB, peak 4.4 MiB, n=4000: 0.000579 s (IQR 1.6 %, 15 runs), C 0.197 %, nnzC 31463, storage 0.9 MiB, peak 5.0 MiB, n=8000: 0.00258 s (IQR 2.6 %, 15 runs), C 0.206 %, nnzC 131709, storage 3.2 MiB, peak 7.4 MiB, n=16000: 0.011 s (IQR 2.3 %, 15 runs), C 0.205 %, nnzC 523621, storage 12.4 MiB, peak 16.5 MiB, n=32000: 0.0617 s (IQR 1.7 %, 15 runs), C 0.203 %, nnzC 2074933, storage 48.3 MiB, peak 52.5 MiB, n=64000: 0.326 s (IQR 1.5 %, 15 runs), C 0.201 %, nnzC 8247887, storage 190.3 MiB, peak 194.5 MiB
+      time / (n^3 d^2) ns: n=1000: 9.72, n=2000: 11.7, n=4000: 9.05, n=8000: 5.04, n=16000: 2.7, n=32000: 1.88, n=64000: 1.24
+      nonzeros per row of C (nnz_c / n; n/16 in parentheses): n=1000: 1 (62), n=2000: 3 (125), n=4000: 8 (250), n=8000: 16 (500), n=16000: 33 (1000), n=32000: 65 (2000), n=64000: 129 (4000)
       blocked / csr: n=1000: 2.25e+04, n=2000: 1.88e+04, n=4000: 2.43e+04
-  band 0.01: exponent 2.52; segments 1000-2000: 2.21, 2000-4000: 2.53, 4000-8000: 2.46, 8000-16000: 2.62, 16000-32000: 2.76
-      n=1000: 0.000383 s, C 2.05 %, nnzC 20514, storage 0 MiB, peak 5 MiB, n=2000: 0.00177 s, C 2.03 %, nnzC 81219, storage 2 MiB, peak 6 MiB, n=4000: 0.0102 s, C 2.01 %, nnzC 321975, storage 7 MiB, peak 12 MiB, n=8000: 0.0561 s, C 2 %, nnzC 1281190, storage 30 MiB, peak 34 MiB, n=16000: 0.345 s, C 2 %, nnzC 5110003, storage 118 MiB, peak 122 MiB, n=32000: 2.35 s, C 1.99 %, nnzC 20409193, storage 469 MiB, peak 473 MiB
+  band 0.01: exponent (n = 1000-32000) 2.52; segments 1000-2000: 2.21, 2000-4000: 2.53, 4000-8000: 2.46, 8000-16000: 2.62, 16000-32000: 2.76, 32000-64000: 2.90
+      n=1000: 0.000383 s (IQR 1.9 %, 15 runs), C 2.05 %, nnzC 20514, storage 0.5 MiB, peak 4.6 MiB, n=2000: 0.00177 s (IQR 2.5 %, 15 runs), C 2.03 %, nnzC 81219, storage 1.9 MiB, peak 6.0 MiB, n=4000: 0.0102 s (IQR 2.3 %, 15 runs), C 2.01 %, nnzC 321975, storage 7.5 MiB, peak 11.6 MiB, n=8000: 0.0561 s (IQR 0.9 %, 15 runs), C 2 %, nnzC 1281190, storage 29.6 MiB, peak 33.7 MiB, n=16000: 0.345 s (IQR 1.0 %, 15 runs), C 2 %, nnzC 5110003, storage 117.6 MiB, peak 121.7 MiB, n=32000: 2.35 s (IQR 0.6 %, 15 runs), C 1.99 %, nnzC 20409193, storage 469.0 MiB, peak 473.3 MiB, n=64000: 17.5 s (IQR 0.4 %, 15 runs), C 2 %, nnzC 81826659, storage 1876.1 MiB, peak 1880.2 MiB
+      time / (n^3 d^2) ns: n=1000: 3.83, n=2000: 2.21, n=4000: 1.6, n=8000: 1.1, n=16000: 0.843, n=32000: 0.716, n=64000: 0.666
+      nonzeros per row of C (nnz_c / n; n/16 in parentheses): n=1000: 21 (62), n=2000: 41 (125), n=4000: 80 (250), n=8000: 160 (500), n=16000: 319 (1000), n=32000: 638 (2000), n=64000: 1279 (4000)
       blocked / csr: n=1000: 573, n=2000: 999, n=4000: 1.38e+03
-  non-OK statuses: none
+  non-OK statuses: csr uniform 0.01 n=64000: MEMORY_LIMIT MEMORY_LIMIT: needs 50055551892 bytes; limit 17179869184 (= 46.6 GiB)
+  dense at n=32000: one float64 matrix 7.6 GiB, three 22.9 GiB; blocked (scalar) extrapolated as n^3 from n=4000: 2.0 h per run
+  dense at n=64000: one float64 matrix 30.5 GiB, three 91.6 GiB; blocked (scalar) extrapolated as n^3 from n=4000: 16.0 h per run
+  csr peak working set - computed storage: 4.1-4.3 MiB
+  csr largest IQR/median: 8.3 %; runs [15]
 
-== Largest tested sizes
-  dense blocked (avx2) dense 1: largest OK n = 4000, longest median 5.1 s
-  dense blocked (scalar) dense 1: largest OK n = 4000, longest median 14.2 s
-  dense ijk (scalar) dense 1: largest OK n = 4000, longest median 234 s
-  dense ikj (avx2) dense 1: largest OK n = 4000, longest median 18.9 s
-  dense ikj (scalar) dense 1: largest OK n = 4000, longest median 27 s
-  dense transpose (scalar) dense 1: largest OK n = 4000, longest median 0.0477 s
-  dense transposed (avx2) dense 1: largest OK n = 4000, longest median 31.9 s
-  dense transposed (scalar) dense 1: largest OK n = 4000, longest median 32.4 s
-  size blocked (scalar) band 0.001: largest OK n = 4000, longest median 14.1 s
-  size blocked (scalar) band 0.01: largest OK n = 4000, longest median 14.1 s
-  size blocked (scalar) uniform 0.001: largest OK n = 4000, longest median 14.1 s
-  size blocked (scalar) uniform 0.01: largest OK n = 4000, longest median 14.1 s
-  size csr (scalar) band 0.001: largest OK n = 32000, longest median 0.0617 s
-  size csr (scalar) band 0.01: largest OK n = 32000, longest median 2.35 s
-  size csr (scalar) uniform 0.001: largest OK n = 32000, longest median 1.45 s
-  size csr (scalar) uniform 0.01: largest OK n = 32000, longest median 17.3 s
-  all non-OK processes: 0
-  largest peak working set: 11481 MiB
-  total wall time of all processes: 3.34 h
+== Largest feasible size (largest n with status OK) and first n over budget
+  dense ijk (scalar) dense 1: largest OK n = 4000, longest median 234 s, largest peak 370.3 MiB, largest attempted n = 8000, first n over budget: 8000 (TIMEOUT)
+  dense ikj (scalar) dense 1: largest OK n = 4000, longest median 27 s, largest peak 370.3 MiB, largest attempted n = 4000, first n over budget: none
+  dense ikj (sse2) dense 1: largest OK n = 4000, longest median 19.8 s, largest peak 370.3 MiB, largest attempted n = 4000, first n over budget: none
+  dense ikj (avx2) dense 1: largest OK n = 4000, longest median 18.9 s, largest peak 370.3 MiB, largest attempted n = 4000, first n over budget: none
+  dense blocked (scalar) dense 1: largest OK n = 4000, longest median 14.2 s, largest peak 370.3 MiB, largest attempted n = 4000, first n over budget: none
+  dense blocked (sse2) dense 1: largest OK n = 4000, longest median 7.99 s, largest peak 370.3 MiB, largest attempted n = 4000, first n over budget: none
+  dense blocked (avx2) dense 1: largest OK n = 4000, longest median 5.1 s, largest peak 370.3 MiB, largest attempted n = 4000, first n over budget: none
+  dense transposed (scalar) dense 1: largest OK n = 4000, longest median 32.4 s, largest peak 492.4 MiB, largest attempted n = 4000, first n over budget: none
+  dense transposed (avx2) dense 1: largest OK n = 4000, longest median 31.9 s, largest peak 492.4 MiB, largest attempted n = 4000, first n over budget: none
+  size csr (scalar) uniform 0.001: largest OK n = 64000, longest median 8.63 s, largest peak 3008.2 MiB, largest attempted n = 64000, first n over budget: none
+  size csr (scalar) uniform 0.01: largest OK n = 32000, longest median 17.3 s, largest peak 11481.1 MiB, largest attempted n = 64000, first n over budget: 64000 (MEMORY_LIMIT)
+  size csr (scalar) band 0.001: largest OK n = 64000, longest median 0.326 s, largest peak 194.5 MiB, largest attempted n = 64000, first n over budget: none
+  size csr (scalar) band 0.01: largest OK n = 64000, longest median 17.5 s, largest peak 1880.2 MiB, largest attempted n = 64000, first n over budget: none
+  all non-OK processes: 2
+    size csr scalar n=64000 uniform 0.01: MEMORY_LIMIT
+    dense ijk scalar n=8000 dense 1: TIMEOUT
+  session extension: largest peak working set 3008 MiB; total wall time of all processes 0.77 h (46.2 min)
+      blocksize: 2.3 min
+      dense: 30.1 min
+      reference: 1.8 min
+      size: 11.9 min
+  session first: largest peak working set 11481 MiB; total wall time of all processes 3.34 h (200.5 min)
+      blocksize: 5.5 min
+      dense: 112.1 min
+      density: 50.1 min
+      size: 32.9 min
+
+== Extension: drift references (new median vs the median of the first session)
+  blocked (avx2, b=256) n=2000: first 0.6413 s [IQR 0.6369-0.6435], extension 0.6421 s [IQR 0.6403-0.6467]; inside the first IQR: yes; difference +0.1 %
+  blocked (scalar, b=32) n=2000: first 1.769 s [IQR 1.764-1.784], extension 1.762 s [IQR 1.76-1.764]; inside the first IQR: no; difference -0.4 %
+  ikj (scalar, b=0) n=2000: first 2.842 s [IQR 2.798-2.875], extension 2.724 s [IQR 2.714-2.75]; inside the first IQR: no; difference -4.2 %
+
+== Extension: vectorisation, gain of each step (median / median)
+  ikj scalar -> sse2: 100: 2.01, 200: 1.52, 500: 1.75, 1000: 1.76, 1500: 1.66, 2000: 1.45, 3000: 1.40, 4000: 1.36; n >= 500: 1.36-1.76
+  ikj sse2 -> avx2: 100: 1.40, 200: 1.69, 500: 1.60, 1000: 1.35, 1500: 1.32, 2000: 1.10, 3000: 1.04, 4000: 1.05; n >= 500: 1.04-1.60
+  ikj scalar -> avx2: 100: 2.81, 200: 2.56, 500: 2.80, 1000: 2.38, 1500: 2.19, 2000: 1.59, 3000: 1.46, 4000: 1.43; n >= 500: 1.43-2.80
+  blocked scalar -> sse2: 100: 1.78, 200: 1.73, 500: 1.75, 1000: 1.75, 1500: 1.75, 2000: 1.76, 3000: 1.77, 4000: 1.78; n >= 500: 1.75-1.78
+  blocked sse2 -> avx2: 100: 1.44, 200: 1.47, 500: 1.60, 1000: 1.55, 1500: 1.56, 2000: 1.57, 3000: 1.56, 4000: 1.57; n >= 500: 1.55-1.60
+  blocked scalar -> avx2: 100: 2.55, 200: 2.54, 500: 2.79, 1000: 2.72, 1500: 2.73, 2000: 2.76, 3000: 2.75, 4000: 2.79; n >= 500: 2.72-2.79
+  share of the scalar -> AVX2 gain (log) obtained by scalar -> SSE2:
+    ikj: 100: 0.67, 200: 0.44, 500: 0.54, 1000: 0.65, 1500: 0.65, 2000: 0.80, 3000: 0.89, 4000: 0.87
+    blocked: 100: 0.61, 200: 0.59, 500: 0.54, 1000: 0.56, 1500: 0.55, 2000: 0.56, 3000: 0.56, 4000: 0.56
+
+== Extension: every non-OK process
+  size csr scalar n=64000 uniform 0.01: MEMORY_LIMIT (MEMORY_LIMIT: needs 50055551892 bytes; limit 17179869184; wall 66.7 s)
+  dense ijk scalar n=8000 dense 1: TIMEOUT (a run exceeded 900 s; wall 900.0 s)
+
+== Correctness
+  vs NumPy: 250 comparisons, all passed: True, largest relative error 1.9e-15; kernels per input [25] (builds ['avx2', 'scalar', 'sse2'])
+  bitwise = ijk (scalar): 10 inputs, all passed: True
+  nnz of C = SciPy: 10 inputs, all passed: True
+  checksums: 205 configurations (183 first session only, 19 extension only, 3 both), all passed: True, distinct checksums per configuration [1]; largest relative difference to the reference 3.2e-13; without reference (output above 1e8 nonzeros): 3

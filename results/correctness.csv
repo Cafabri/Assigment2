@@ -16,7 +16,15 @@ vs NumPy,50,dense,1,blocked/128 (avx2),4.547473508864641e-13,4.0927062253465917e
 vs NumPy,50,dense,1,blocked/256 (avx2),4.547473508864641e-13,4.0927062253465917e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,dense,1,transposed (avx2),4.547473508864641e-13,4.0927062253465917e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,dense,1,csr (avx2),4.547473508864641e-13,4.0927062253465917e-16,"rtol=1e-11, zeros exact",True
-all methods = ijk (bitwise),50,dense,1,17 kernels,0.0,,exact,True
+vs NumPy,50,dense,1,ikj (sse2),4.547473508864641e-13,4.0927062253465917e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,dense,1,blocked/16 (sse2),4.547473508864641e-13,4.0927062253465917e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,dense,1,blocked/32 (sse2),4.547473508864641e-13,4.0927062253465917e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,dense,1,blocked/64 (sse2),4.547473508864641e-13,4.0927062253465917e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,dense,1,blocked/128 (sse2),4.547473508864641e-13,4.0927062253465917e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,dense,1,blocked/256 (sse2),4.547473508864641e-13,4.0927062253465917e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,dense,1,transposed (sse2),4.547473508864641e-13,4.0927062253465917e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,dense,1,csr (sse2),4.547473508864641e-13,4.0927062253465917e-16,"rtol=1e-11, zeros exact",True
+all methods = ijk (bitwise),50,dense,1,25 kernels,0.0,,exact,True
 nnz of C vs SciPy,50,dense,1,csr (scalar),0.0,,exact,True
 vs NumPy,50,uniform,0.05,ijk (scalar),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,uniform,0.05,ikj (scalar),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
@@ -35,7 +43,15 @@ vs NumPy,50,uniform,0.05,blocked/128 (avx2),1.4210854715202004e-14,2.11245409640
 vs NumPy,50,uniform,0.05,blocked/256 (avx2),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,uniform,0.05,transposed (avx2),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,uniform,0.05,csr (avx2),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
-all methods = ijk (bitwise),50,uniform,0.05,17 kernels,0.0,,exact,True
+vs NumPy,50,uniform,0.05,ikj (sse2),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.05,blocked/16 (sse2),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.05,blocked/32 (sse2),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.05,blocked/64 (sse2),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.05,blocked/128 (sse2),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.05,blocked/256 (sse2),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.05,transposed (sse2),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.05,csr (sse2),1.4210854715202004e-14,2.1124540964095286e-16,"rtol=1e-11, zeros exact",True
+all methods = ijk (bitwise),50,uniform,0.05,25 kernels,0.0,,exact,True
 nnz of C vs SciPy,50,uniform,0.05,csr (scalar),0.0,,exact,True
 vs NumPy,50,uniform,0.3,ijk (scalar),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,uniform,0.3,ikj (scalar),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
@@ -54,7 +70,15 @@ vs NumPy,50,uniform,0.3,blocked/128 (avx2),5.684341886080802e-14,3.7129246835188
 vs NumPy,50,uniform,0.3,blocked/256 (avx2),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,uniform,0.3,transposed (avx2),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,uniform,0.3,csr (avx2),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
-all methods = ijk (bitwise),50,uniform,0.3,17 kernels,0.0,,exact,True
+vs NumPy,50,uniform,0.3,ikj (sse2),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.3,blocked/16 (sse2),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.3,blocked/32 (sse2),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.3,blocked/64 (sse2),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.3,blocked/128 (sse2),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.3,blocked/256 (sse2),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.3,transposed (sse2),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,uniform,0.3,csr (sse2),5.684341886080802e-14,3.712924683518858e-16,"rtol=1e-11, zeros exact",True
+all methods = ijk (bitwise),50,uniform,0.3,25 kernels,0.0,,exact,True
 nnz of C vs SciPy,50,uniform,0.3,csr (scalar),0.0,,exact,True
 vs NumPy,50,band,0.05,ijk (scalar),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,band,0.05,ikj (scalar),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
@@ -73,7 +97,15 @@ vs NumPy,50,band,0.05,blocked/128 (avx2),2.842170943040401e-14,2.098476135614335
 vs NumPy,50,band,0.05,blocked/256 (avx2),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,band,0.05,transposed (avx2),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,band,0.05,csr (avx2),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
-all methods = ijk (bitwise),50,band,0.05,17 kernels,0.0,,exact,True
+vs NumPy,50,band,0.05,ikj (sse2),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.05,blocked/16 (sse2),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.05,blocked/32 (sse2),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.05,blocked/64 (sse2),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.05,blocked/128 (sse2),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.05,blocked/256 (sse2),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.05,transposed (sse2),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.05,csr (sse2),2.842170943040401e-14,2.098476135614335e-16,"rtol=1e-11, zeros exact",True
+all methods = ijk (bitwise),50,band,0.05,25 kernels,0.0,,exact,True
 nnz of C vs SciPy,50,band,0.05,csr (scalar),0.0,,exact,True
 vs NumPy,50,band,0.3,ijk (scalar),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,band,0.3,ikj (scalar),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
@@ -92,7 +124,15 @@ vs NumPy,50,band,0.3,blocked/128 (avx2),1.7053025658242404e-13,3.726974444675104
 vs NumPy,50,band,0.3,blocked/256 (avx2),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,band,0.3,transposed (avx2),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,50,band,0.3,csr (avx2),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
-all methods = ijk (bitwise),50,band,0.3,17 kernels,0.0,,exact,True
+vs NumPy,50,band,0.3,ikj (sse2),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.3,blocked/16 (sse2),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.3,blocked/32 (sse2),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.3,blocked/64 (sse2),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.3,blocked/128 (sse2),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.3,blocked/256 (sse2),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.3,transposed (sse2),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,50,band,0.3,csr (sse2),1.7053025658242404e-13,3.7269744446751045e-16,"rtol=1e-11, zeros exact",True
+all methods = ijk (bitwise),50,band,0.3,25 kernels,0.0,,exact,True
 nnz of C vs SciPy,50,band,0.3,csr (scalar),0.0,,exact,True
 vs NumPy,257,dense,1,ijk (scalar),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
 vs NumPy,257,dense,1,ikj (scalar),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
@@ -111,7 +151,15 @@ vs NumPy,257,dense,1,blocked/128 (avx2),1.1823431123048067e-11,1.934957008326603
 vs NumPy,257,dense,1,blocked/256 (avx2),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
 vs NumPy,257,dense,1,transposed (avx2),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
 vs NumPy,257,dense,1,csr (avx2),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
-all methods = ijk (bitwise),257,dense,1,17 kernels,0.0,,exact,True
+vs NumPy,257,dense,1,ikj (sse2),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
+vs NumPy,257,dense,1,blocked/16 (sse2),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
+vs NumPy,257,dense,1,blocked/32 (sse2),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
+vs NumPy,257,dense,1,blocked/64 (sse2),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
+vs NumPy,257,dense,1,blocked/128 (sse2),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
+vs NumPy,257,dense,1,blocked/256 (sse2),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
+vs NumPy,257,dense,1,transposed (sse2),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
+vs NumPy,257,dense,1,csr (sse2),1.1823431123048067e-11,1.9349570083266035e-15,"rtol=1e-11, zeros exact",True
+all methods = ijk (bitwise),257,dense,1,25 kernels,0.0,,exact,True
 nnz of C vs SciPy,257,dense,1,csr (scalar),0.0,,exact,True
 vs NumPy,257,uniform,0.05,ijk (scalar),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,257,uniform,0.05,ikj (scalar),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
@@ -130,7 +178,15 @@ vs NumPy,257,uniform,0.05,blocked/128 (avx2),5.684341886080802e-14,2.50983816673
 vs NumPy,257,uniform,0.05,blocked/256 (avx2),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,257,uniform,0.05,transposed (avx2),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,257,uniform,0.05,csr (avx2),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
-all methods = ijk (bitwise),257,uniform,0.05,17 kernels,0.0,,exact,True
+vs NumPy,257,uniform,0.05,ikj (sse2),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.05,blocked/16 (sse2),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.05,blocked/32 (sse2),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.05,blocked/64 (sse2),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.05,blocked/128 (sse2),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.05,blocked/256 (sse2),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.05,transposed (sse2),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.05,csr (sse2),5.684341886080802e-14,2.509838166735706e-16,"rtol=1e-11, zeros exact",True
+all methods = ijk (bitwise),257,uniform,0.05,25 kernels,0.0,,exact,True
 nnz of C vs SciPy,257,uniform,0.05,csr (scalar),0.0,,exact,True
 vs NumPy,257,uniform,0.3,ijk (scalar),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,257,uniform,0.3,ikj (scalar),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
@@ -149,7 +205,15 @@ vs NumPy,257,uniform,0.3,blocked/128 (avx2),4.547473508864641e-13,7.280025469248
 vs NumPy,257,uniform,0.3,blocked/256 (avx2),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,257,uniform,0.3,transposed (avx2),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,257,uniform,0.3,csr (avx2),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
-all methods = ijk (bitwise),257,uniform,0.3,17 kernels,0.0,,exact,True
+vs NumPy,257,uniform,0.3,ikj (sse2),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.3,blocked/16 (sse2),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.3,blocked/32 (sse2),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.3,blocked/64 (sse2),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.3,blocked/128 (sse2),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.3,blocked/256 (sse2),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.3,transposed (sse2),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,uniform,0.3,csr (sse2),4.547473508864641e-13,7.280025469248261e-16,"rtol=1e-11, zeros exact",True
+all methods = ijk (bitwise),257,uniform,0.3,25 kernels,0.0,,exact,True
 nnz of C vs SciPy,257,uniform,0.3,csr (scalar),0.0,,exact,True
 vs NumPy,257,band,0.05,ijk (scalar),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,257,band,0.05,ikj (scalar),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
@@ -168,7 +232,15 @@ vs NumPy,257,band,0.05,blocked/128 (avx2),1.7053025658242404e-13,4.8149387939367
 vs NumPy,257,band,0.05,blocked/256 (avx2),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,257,band,0.05,transposed (avx2),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,257,band,0.05,csr (avx2),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
-all methods = ijk (bitwise),257,band,0.05,17 kernels,0.0,,exact,True
+vs NumPy,257,band,0.05,ikj (sse2),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.05,blocked/16 (sse2),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.05,blocked/32 (sse2),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.05,blocked/64 (sse2),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.05,blocked/128 (sse2),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.05,blocked/256 (sse2),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.05,transposed (sse2),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.05,csr (sse2),1.7053025658242404e-13,4.814938793936764e-16,"rtol=1e-11, zeros exact",True
+all methods = ijk (bitwise),257,band,0.05,25 kernels,0.0,,exact,True
 nnz of C vs SciPy,257,band,0.05,csr (scalar),0.0,,exact,True
 vs NumPy,257,band,0.3,ijk (scalar),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,257,band,0.3,ikj (scalar),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
@@ -187,5 +259,13 @@ vs NumPy,257,band,0.3,blocked/128 (avx2),1.8189894035458565e-12,9.61467271841483
 vs NumPy,257,band,0.3,blocked/256 (avx2),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,257,band,0.3,transposed (avx2),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
 vs NumPy,257,band,0.3,csr (avx2),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
-all methods = ijk (bitwise),257,band,0.3,17 kernels,0.0,,exact,True
+vs NumPy,257,band,0.3,ikj (sse2),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.3,blocked/16 (sse2),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.3,blocked/32 (sse2),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.3,blocked/64 (sse2),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.3,blocked/128 (sse2),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.3,blocked/256 (sse2),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.3,transposed (sse2),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
+vs NumPy,257,band,0.3,csr (sse2),1.8189894035458565e-12,9.61467271841483e-16,"rtol=1e-11, zeros exact",True
+all methods = ijk (bitwise),257,band,0.3,25 kernels,0.0,,exact,True
 nnz of C vs SciPy,257,band,0.3,csr (scalar),0.0,,exact,True
