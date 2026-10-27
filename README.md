@@ -52,8 +52,10 @@ another Windows machine reproduces the procedure, not the numbers.
 │   ├── checksums.csv          # Checksum and nnz of every configuration vs the reference
 │   ├── summary.csv            # Median, IQR, process spread, ns per multiply-add, memory
 │   ├── report_numbers.txt     # Ratios, crossovers and fits quoted in the report
-│   ├── tables/*.tex           # Tables included by the report
-│   ├── plot_*.png             # Figures used in the report
+│   ├── tables/*.tex           # Generated tables; the report includes block_size, dense_runtime,
+│   │                          #   vectorisation, density, size and limits
+│   ├── plot_*.png             # Generated figures; the report uses plot_cost_per_op,
+│   │                          #   plot_fill_memory and plot_density_time
 │   └── extension/             # Second session (run_experiment.py --extension): the same
 │                              #   raw_measurements, run_status, process_memory, patterns,
 │                              #   block_choice, vectorisation_report (3 builds, with the loops
@@ -86,8 +88,8 @@ Requirements: MSYS2 with `mingw-w64-x86_64-gcc`, Python 3.11 and
 `run_experiment.py` (`GCC`); change it if gcc is installed elsewhere.
 
 ```bash
-python run_experiment.py                # build + all benchmarks (about 3 hours)
-python run_experiment.py --extension    # extension, writes results/extension/ (46.8 min here)
+python run_experiment.py                # build + all benchmarks (3.3 h of benchmark processes here)
+python run_experiment.py --extension    # extension, writes results/extension/ (46.2 min here)
 python analysis/check_correctness.py    # validation against NumPy / SciPy + checksums (both sessions)
 python analysis/plot_results.py         # summary.csv, figures and tables
 python analysis/report_numbers.py       # numbers quoted in the text
@@ -134,7 +136,7 @@ Methods: `ijk`, `ikj`, `blocked`, `transposed`, `transpose` (the transposition a
   d ∈ {0.1, 0.5, 1, 2, 5, 10, 20, 30, 50, 75, 100} %, uniform and band); `size` (Part B,
   CSR for n ∈ {1000, …, 32000} at d ∈ {0.1, 1} %, dense blocked up to n = 4000).
 - **Extension** (`--extension`, a second measurement session on 2026-10-27,
-  46.8 min): drift references (`reference`: blocked scalar
+  46.2 min of benchmark processes): drift references (`reference`: blocked scalar
   b = 32, blocked AVX2 b = 256 and ikj scalar at n = 2000, compared with the first
   session); the `sse2` build (block sweep and ikj / blocked at every dense size); CSR at
   n = 64000 for the four size-experiment inputs; ijk scalar at n = 8000 (beyond the time
@@ -183,9 +185,9 @@ Methods: `ijk`, `ikj`, `blocked`, `transposed`, `transpose` (the transposition a
 ## Use of generative AI
 
 Claude Opus 5.5 (Anthropic), used through Claude Code, served as a support tool during this
-assignment: to help write and debug the benchmark program (`c/`), the experiment runner
-(`run_experiment.py`) and the analysis scripts (`analysis/`), including those of the second
-measurement session, and to improve the structure and wording of the report. All the
-measurements come from running the code on the machine described above. The author reviewed
+assignment: to help write and debug the benchmark program, the experiment runner and the analysis scripts,
+including those of the second measurement session, and to improve the structure and wording of
+the report. All the measurements come from running the code on the machine described in
+Section 3.3 of the report. The author reviewed
 the code and the AI-generated text, checked the numbers against the raw data and the
 references, and is responsible for the conclusions.

@@ -262,7 +262,7 @@ $n = 1000$ to $32\,000$ (doubling) at $d \in \{0.1, 1\}\%$, both distributions, 
 blocked up to $n = 4000$.
 
 A \textbf{second measurement session (27 October 2026)}, with the same programs, protocol
-and budget (\texttt{run\_experiment.py -{}-extension}, 46.8~min, \texttt{results/extension/}),
+and budget (\texttt{run\_experiment.py -{}-extension}, 46.2~min, \texttt{results/extension/}),
 added: the \texttt{sse2} build, which separates enabling vectorisation from the vector
 width (block sweep, and \texttt{ikj} and blocked with its $b^*$ at every dense size); series
 up to the budget (\texttt{csr} at $n = 64\,000$ for the four size inputs, and scalar
@@ -704,7 +704,7 @@ sparse library; and the untuned sorting threshold of $n/16$ nonzeros per row.
 
 The repository holds the code, the commands (\texttt{README.md}) and the raw data of both
 sessions. The study is reproduced with \texttt{run\_experiment.py} (3.3~h), its
-\texttt{-{}-extension} (46.8~min) and the scripts in \texttt{analysis/}.
+\texttt{-{}-extension} (46.2~min) and the scripts in \texttt{analysis/}.
 
 \section*{Use of generative AI}
 
