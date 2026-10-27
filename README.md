@@ -31,7 +31,7 @@ another Windows machine reproduces the procedure, not the numbers.
 ## Repository structure
 
 ```
-├── run_experiment.py          # Builds both binaries, runs every configuration under the budget
+├── run_experiment.py          # Builds the binaries, runs every configuration under the budget
 ├── c/
 │   ├── matmul.h / matmul.c    # Dense kernels: ijk (baseline), ikj, blocked, transposed
 │   ├── sparse.h / sparse.c    # CSR format, dense <-> CSR conversion, Gustavson SpGEMM
@@ -53,7 +53,11 @@ another Windows machine reproduces the procedure, not the numbers.
 │   ├── summary.csv            # Median, IQR, process spread, ns per multiply-add, memory
 │   ├── report_numbers.txt     # Ratios, crossovers and fits quoted in the report
 │   ├── tables/*.tex           # Tables included by the report
-│   └── plot_*.png             # Figures used in the report
+│   ├── plot_*.png             # Figures used in the report
+│   └── extension/             # Second session (run_experiment.py --extension): the same
+│                              #   raw_measurements, run_status, process_memory, patterns,
+│                              #   block_choice, vectorisation_report (3 builds, with the loops
+│                              #   gcc could not vectorise) and environment files
 └── report/
     ├── Assignment2_Report.tex
     └── Assignment02_FalconBrito_Report.pdf
@@ -71,6 +75,7 @@ another Windows machine reproduces the procedure, not the numbers.
 | C compiler | gcc 16.1.0 (MSYS2/MinGW64) |
 | Build `scalar` | `-O2 -ffp-contract=off` (the flags of Assignment 1; no loop is vectorised) |
 | Build `avx2` | `-O2 -ffp-contract=off -fvect-cost-model=dynamic -mavx2` |
+| Build `sse2` | `-O2 -ffp-contract=off -fvect-cost-model=dynamic` (extension; 16-byte vectors) |
 | Python | CPython 3.11.9 (runner and analysis only) |
 | Analysis | numpy 2.2, scipy 1.15, pandas 2.2, matplotlib 3.10 |
 
@@ -82,7 +87,8 @@ Requirements: MSYS2 with `mingw-w64-x86_64-gcc`, Python 3.11 and
 
 ```bash
 python run_experiment.py                # build + all benchmarks (about 3 hours)
-python analysis/check_correctness.py    # validation against NumPy / SciPy + checksums
+python run_experiment.py --extension    # extension, writes results/extension/ (46.8 min here)
+python analysis/check_correctness.py    # validation against NumPy / SciPy + checksums (both sessions)
 python analysis/plot_results.py         # summary.csv, figures and tables
 python analysis/report_numbers.py       # numbers quoted in the text
 ```
@@ -100,6 +106,7 @@ The benchmark can also be built and run on its own:
 cd c
 gcc -O2 -ffp-contract=off -DBUILD_NAME='"scalar"' -o benchmark_scalar.exe matmul.c sparse.c benchmark.c
 gcc -O2 -ffp-contract=off -fvect-cost-model=dynamic -mavx2 -DBUILD_NAME='"avx2"' -o benchmark_avx2.exe matmul.c sparse.c benchmark.c
+gcc -O2 -ffp-contract=off -fvect-cost-model=dynamic -DBUILD_NAME='"sse2"' -o benchmark_sse2.exe matmul.c sparse.c benchmark.c
 benchmark_scalar.exe run ikj 1000 dense 1 0 2 5          # method n dist density block warm-ups runs
 benchmark_scalar.exe run blocked 1000 dense 1 32 2 5
 benchmark_scalar.exe run csr 2000 uniform 0.01 0 2 5
@@ -126,6 +133,14 @@ Methods: `ijk`, `ikj`, `blocked`, `transposed`, `transpose` (the transposition a
   n ∈ {100, 200, 500, 1000, 1500, 2000, 3000, 4000}); `density` (Part B, n = 2000,
   d ∈ {0.1, 0.5, 1, 2, 5, 10, 20, 30, 50, 75, 100} %, uniform and band); `size` (Part B,
   CSR for n ∈ {1000, …, 32000} at d ∈ {0.1, 1} %, dense blocked up to n = 4000).
+- **Extension** (`--extension`, a second measurement session on 2026-10-27,
+  46.8 min): drift references (`reference`: blocked scalar
+  b = 32, blocked AVX2 b = 256 and ikj scalar at n = 2000, compared with the first
+  session); the `sse2` build (block sweep and ikj / blocked at every dense size); CSR at
+  n = 64000 for the four size-experiment inputs; ijk scalar at n = 8000 (beyond the time
+  budget). It writes only to `results/extension/` and can be resumed: the processes that
+  already have a status are not repeated. `--out`, `--budget-seconds`, `--memory-bytes`
+  and `--smoke` exist only to test the runner.
 - **Timer:** only the kernel call. Dense kernels: inputs and zeroed result prepared
   outside the timer (as in Assignment 1); `transposed` receives Bᵀ prepared outside the
   timer, and the transposition is timed separately (`transpose`). CSR: inputs already in
@@ -148,7 +163,7 @@ Methods: `ijk`, `ikj`, `blocked`, `transposed`, `transpose` (the transposition a
 | Column | Description |
 |--------|-------------|
 | `method` | `ijk`, `ikj`, `blocked`, `transposed`, `transpose`, `csr` or `convert` |
-| `build` | `scalar` or `avx2` |
+| `build` | `scalar`, `avx2` or `sse2` |
 | `n` | Matrix side length |
 | `distribution` | `dense`, `uniform` or `band` |
 | `density` | Requested density d of A and B (fraction of nonzero entries) |
@@ -162,11 +177,15 @@ Methods: `ijk`, `ikj`, `blocked`, `transposed`, `transpose` (the transposition a
 | `nnz_a`, `nnz_b`, `nnz_c` | Nonzeros of A, B and of the output (for `convert`: nnz(A) + nnz(B)) |
 | `memory_bytes` | Computed storage of the matrices of the method |
 | `checksum` | Sum of all elements of the output (empty for batched runs) |
-| `experiment` | `blocksize`, `dense`, `density` or `size` |
+| `experiment` | `blocksize`, `dense`, `density`, `size` or `reference` (extension) |
 | `process` | Index of the independent process (1–3) |
 
 ## Use of generative AI
 
-Claude (Anthropic), used through Claude Code, helped to write and debug parts of the
-benchmark and analysis code and to revise the report. The author reviewed the code, ran
-every measurement on the machine described above and is responsible for the conclusions.
+Claude Opus 5.5 (Anthropic), used through Claude Code, served as a support tool during this
+assignment: to help write and debug the benchmark program (`c/`), the experiment runner
+(`run_experiment.py`) and the analysis scripts (`analysis/`), including those of the second
+measurement session, and to improve the structure and wording of the report. All the
+measurements come from running the code on the machine described above. The author reviewed
+the code and the AI-generated text, checked the numbers against the raw data and the
+references, and is responsible for the conclusions.
