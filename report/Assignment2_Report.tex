@@ -355,10 +355,10 @@ that of \texttt{ikj} rises less, from 0.25 to 0.36~ns. The blocked kernel stays 
 per multiply-add up to $n = 4000$ (fitted exponent 3.01). For $n \ge 2000$ it is
 1.61--1.90$\times$ faster than \texttt{ikj}.
 
-\textit{Transposed operand.} \texttt{transposed} is within 4\% of \texttt{ijk} at
-$n = 200$ and 500. It is faster from $n = 1000$, by 7.2$\times$ at 4000, but always slower
-than \texttt{ikj} (1.2--1.6$\times$ from $n = 200$). The transposition itself takes at most
-0.5\% of the kernel time.
+\textit{Transposed operand.} \texttt{transposed} is within 5\% of \texttt{ijk} at
+$n = 200$ and 500. It is faster at $n = 100$ and from $n = 1000$, by 7.2$\times$ at 4000,
+but always slower than \texttt{ikj} (1.2--1.6$\times$ from $n = 200$). The transposition
+itself takes 1.5\% of the kernel time at $n = 100$ and under 0.5\% from $n = 200$.
 
 \begin{table}[H]
 \centering
@@ -576,10 +576,10 @@ still rises from 0.25 to 0.36~ns between $n = 1500$ and 2000 & Partly confirmed 
 jump, not none) \\
 P2 Blocking & 1.61--1.90$\times$ faster than \texttt{ikj} for $n \ge 2000$; constant
 0.22~ns per multiply-add & Confirmed \\
-P3 Transposed & Slower than \texttt{ikj} at every size; faster than \texttt{ijk} only from
-$n = 1000$ & Partly confirmed \\
+P3 Transposed & Slower than \texttt{ikj} at every size; within 5\% of \texttt{ijk} at
+$n = 200$ and 500, faster at the other sizes & Partly confirmed \\
 P4 Vectorisation & Blocked 2.5--2.8$\times$ ($b^*$ of each build), 2.19$\times$ at fixed $b$;
-the non-vectorised \texttt{transposed} within 4\% & Confirmed \\
+the non-vectorised \texttt{transposed} gains at most 4\% & Confirmed \\
 P5 Sparse time & Crossovers between 50 and 75\% (about 55\% uniform, 57\% band); band
 advantage larger at every density below them & Confirmed \\
 P6 Sparse memory & CSR storage smaller than dense up to about 50\% (uniform) and 56\%
@@ -607,7 +607,7 @@ that its stride adds to it; the shares of cache and TLB remain open.
 from the cache~\cite{lam1991}. Three tiles take 24~KB with $b = 32$ (48~KB L1) and 1.5~MB
 with $b = 256$ (2~MB L2). Small tiles may be too short for the AVX2 vector loop.
 
-\textbf{Transposed operand.} Up to $n = 500$, where $B$ still fits in the cache,
+\textbf{Transposed operand.} At $n = 200$ and 500, where $B$ still fits in the cache,
 \texttt{ijk} and \texttt{transposed} both cost 0.34--0.37~ns per multiply-add, and
 \texttt{ikj}, whose consecutive additions go to different elements, 0.23~ns. This is
 consistent with dot products limited by the latency of one serial chain of
